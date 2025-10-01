@@ -12,7 +12,24 @@ def texttoaudio(folder: str) -> None:
     with open(description_path, "r", encoding="utf-8") as f:
         text = f.read()
     print(text, folder)
-    text_to_speech_file(text, folder)
+    try:
+        text_to_speech_file(text, folder)
+    except Exception as e:
+        print("TTS failed, using fallback audio:", e)
+        # fallback: copy a sample track if available
+        songs_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'songs')
+        fallback = None
+        for name in ['1.mp3', '2.mp3', '3.mp3']:
+            candidate = os.path.join(songs_dir, name)
+            if os.path.exists(candidate):
+                fallback = candidate
+                break
+        if fallback:
+            dst = os.path.join("user_uploads", folder, "audio.mp3")
+            with open(fallback, 'rb') as src, open(dst, 'wb') as out:
+                out.write(src.read())
+        else:
+            raise
     input_path = os.path.join("user_uploads", folder, "input.txt")
     if not os.path.exists(input_path):
         print(f"Error: input.txt not found in folder {folder}")

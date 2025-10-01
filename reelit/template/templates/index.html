@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}AI Reel Generator - Create Amazing Instagram Reels{% endblock %}
+{% block title %}ReeLIT - Create Amazing Instagram Reels{% endblock %}
 
 {% block content %}
 <section class="hero-section">
@@ -11,45 +11,17 @@
     </div>
 </section>
 
-<section class="features-section">
-    <div class="container">
-        <div class="row g-4">
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <i class="fas fa-magic feature-icon"></i>
-                    <h3>AI-Powered Editing</h3>
-                    <p>Let our AI analyze and enhance your videos automatically</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <i class="fas fa-film feature-icon"></i>
-                    <h3>Smart Stitching</h3>
-                    <p>Seamlessly combine multiple clips into perfect reels</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="feature-card">
-                    <i class="fas fa-music feature-icon"></i>
-                    <h3>Music Integration</h3>
-                    <p>Add trending music and sound effects to your reels</p>
-                </div>
-            </div>
-        </div>
+{# Removed features cards section as requested #}
+
+<section class="banner-section">
+    <div class="banner-overlay"></div>
+    <img src="{{ url_for('static', filename='4.jpg') }}" alt="ReeLIT banner" class="banner-image">
+    <div class="banner-content">
+        <h2 class="banner-title">Create. Share. Shine.</h2>
     </div>
+    
 </section>
 
-<section class="showcase-section">
-    <div class="container">
-        <h2 class="showcase-title">Featured Creations</h2>
-        <div class="image-grid">
-            <img src="{{ url_for('static', filename='1.jpg') }}" alt="Reel Example 1" class="showcase-image">
-            <img src="{{ url_for('static', filename='2.jpg') }}" alt="Reel Example 2" class="showcase-image">
-            <img src="{{ url_for('static', filename='3.jpg') }}" alt="Reel Example 3" class="showcase-image">
-            <img src="{{ url_for('static', filename='4.jpg') }}" alt="Reel Example 4" class="showcase-image">
-            <img src="{{ url_for('static', filename='5.jpg') }}" alt="Reel Example 5" class="showcase-image">
-        </div>
-    </div>
-</section>
+{# Removed showcase section as requested #}
 {% endblock %}
  

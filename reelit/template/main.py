@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 import uuid
 from werkzeug.utils import secure_filename
 import os
@@ -8,6 +8,7 @@ UPLOAD_FOLDER = 'user_uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.secret_key = os.environ.get('FLASK_SECRET_KEY', 'dev-secret-key')
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -56,19 +57,23 @@ def create():
         # Trigger audio and reel generation synchronously
         try:
             if not input_files:
-                print("No valid image files were uploaded; skipping generation.")
+                flash("No valid image files were uploaded.", "error")
             else:
                 texttoaudio(rec_id)
                 audio_path = os.path.join(app.config['UPLOAD_FOLDER'], rec_id, 'audio.mp3')
                 if not os.path.exists(audio_path):
-                    print("Audio generation failed: audio.mp3 not found at", audio_path)
+                    flash("Audio generation failed.", "error")
                 create_reel(rec_id)
                 reels_dir = os.path.join(app.static_folder, "reels")
                 output_file = os.path.join(reels_dir, f"{rec_id}.mp4")
                 if not os.path.exists(output_file):
-                    print("Reel generation failed: output not found at", output_file)
+                    flash("Reel generation failed.", "error")
+                else:
+                    flash("Reel generated successfully!", "success")
+                    return redirect(url_for('gallery'))
         except Exception as e:
             print("Error generating audio/reel:", e)
+            flash("Unexpected error during generation.", "error")
     return render_template("create.html", myid=myid)
 
 @app.route("/gallery")
@@ -79,6 +84,46 @@ def gallery():
     reels = [f for f in os.listdir(reels_dir) if f.lower().endswith('.mp4')]
     reels.sort(reverse=True)
     return render_template("gallery.html", reels=reels)
+
+@app.post("/delete-reel")
+def delete_reel():
+    reel_filename = request.form.get('reel')
+    if not reel_filename or not reel_filename.lower().endswith('.mp4'):
+        flash('Invalid reel specified.', 'error')
+        return redirect(url_for('gallery'))
+
+    reels_dir = os.path.join(app.static_folder, 'reels')
+    reel_path = os.path.join(reels_dir, reel_filename)
+
+    # Only allow deletion within the reels directory
+    if not os.path.abspath(reel_path).startswith(os.path.abspath(reels_dir)):
+        flash('Unauthorized path.', 'error')
+        return redirect(url_for('gallery'))
+
+    # Derive upload/session folder from UUID part of filename
+    reel_id = os.path.splitext(reel_filename)[0]
+    upload_folder = os.path.join(app.config['UPLOAD_FOLDER'], reel_id)
+
+    try:
+        if os.path.exists(reel_path):
+            os.remove(reel_path)
+        # Best-effort cleanup of associated upload folder
+        if os.path.isdir(upload_folder):
+            # Remove files then folder
+            for name in os.listdir(upload_folder):
+                try:
+                    os.remove(os.path.join(upload_folder, name))
+                except Exception:
+                    pass
+            try:
+                os.rmdir(upload_folder)
+            except Exception:
+                pass
+        flash('Reel deleted successfully.', 'success')
+    except Exception as e:
+        print('Error deleting reel:', e)
+        flash('Failed to delete reel.', 'error')
+    return redirect(url_for('gallery'))
 
 if __name__ == "__main__":
     app.run(debug=True)

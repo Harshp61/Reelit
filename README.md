@@ -1,6 +1,6 @@
 <div align="center">
 
-# ReelIt — AI Reel Generator
+# ReeLIT — AI Reel Generator
 
 Turn your images and text into vertical reels with auto-generated voiceovers using ElevenLabs and ffmpeg.
 

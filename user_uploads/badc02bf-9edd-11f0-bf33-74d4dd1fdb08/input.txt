@@ -1,0 +1,6 @@
+file 'C:/Users/pande/OneDrive/Desktop/reelit/user_uploads/badc02bf-9edd-11f0-bf33-74d4dd1fdb08/IMG_20250815_184537.jpg'
+duration 3
+file 'C:/Users/pande/OneDrive/Desktop/reelit/user_uploads/badc02bf-9edd-11f0-bf33-74d4dd1fdb08/IMG_20250815_185617.jpg'
+duration 3
+file 'C:/Users/pande/OneDrive/Desktop/reelit/user_uploads/badc02bf-9edd-11f0-bf33-74d4dd1fdb08/IMG_20250815_151444.jpg'
+duration 3

@@ -1,28 +1,37 @@
 import os
+from texttoaudio import text_to_speech_file
+import time
 
-def text_to_speech(folder):
-    print(folder)
+def texttoaudio(folder):
+    print("Generating audio for folder:", folder)
+    with open(f"user_uploads/{folder}/description.txt") as f:
+        text = f.read()
+    print(text,folder)
+    # text_to_speech_file(text, folder)
 
 def create_reel(folder):
     print(folder)
 
 if __name__ == "__main__":
-    # Check if done.txt exists
-    if not os.path.exists("done.txt"):
-        # Create an empty done.txt if it doesn't exist
-        with open("done.txt", "w") as f:
-            pass
-        
-    # Read the contents of done.txt
-    with open("done.txt", "r") as f:
-        done_folders = f.readlines()
+    while True:
+        print("Checking for new folders...")
+        # Check if done.txt exists
+        if not os.path.exists("done.txt"):
+            # Create an empty done.txt if it doesn't exist
+            with open("done.txt", "w") as f:
+                pass
+            
+        # Read the contents of done.txt
+        with open("done.txt", "r") as f:
+            done_folders = f.readlines()
 
-    done_folders = [line.strip() for line in done_folders]
+        done_folders = [line.strip() for line in done_folders]
 
-    folders = os.listdir("user_uploads")
-    for folder in folders:
-        if folder not in done_folders:
-            text_to_speech(folder)
-            create_reel(folder)
-            with open("done.txt", "a") as f:
-                f.write(folder + "\n")
+        folders = os.listdir("user_uploads")
+        for folder in folders:
+            if folder not in done_folders:
+                texttoaudio(folder)
+                create_reel(folder)
+                with open("done.txt", "a") as f:
+                    f.write(folder + "\n")
+        time.sleep(10) 

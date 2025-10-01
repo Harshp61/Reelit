@@ -1,66 +1,92 @@
 .upload-section {
     padding: 4rem 0;
-    background: #f8f9fa;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
     min-height: 70vh;
     display: flex;
     align-items: center;
 }
 
 .upload-container {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 2.25rem;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+}
+
+:root[data-theme="light"] .upload-container {
+    background: rgba(255,255,255,0.75);
+    border-color: rgba(0,0,0,0.06);
+    box-shadow: 0 25px 80px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.6);
 }
 
 .upload-title {
     text-align: center;
-    margin-bottom: 2rem;
-    color: var(--primary-color);
+    margin-bottom: 1.25rem;
+    background: linear-gradient(90deg, var(--neon-yellow), var(--secondary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .upload-instructions {
     text-align: center;
     margin-bottom: 2rem;
-    color: #666;
+    color: rgba(233,236,241,0.8);
 }
+:root[data-theme="light"] .upload-instructions { color: #495367; }
 
 .dropzone {
-    border: 2px dashed var(--primary-color) !important;
-    border-radius: 10px !important;
-    background: #f8f9fa !important;
+    border: 2px dashed rgba(255,255,255,0.35) !important;
+    border-radius: 14px !important;
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)) !important;
     min-height: 200px !important;
     padding: 20px !important;
     cursor: pointer !important;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06), 0 10px 30px rgba(0,0,0,0.25) !important;
+    transition: transform 0.25s ease, box-shadow 0.25s ease !important;
+}
+:root[data-theme="light"] .dropzone {
+    border-color: rgba(0,0,0,0.1) !important;
+    background: rgba(255,255,255,0.75) !important;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.04), 0 10px 30px rgba(0,0,0,0.08) !important;
 }
 
 .dropzone .dz-message {
     margin: 2em 0 !important;
-    color: var(--primary-color) !important;
+    color: rgba(255,255,255,0.9) !important;
     font-size: 1.2rem !important;
+}
+:root[data-theme="light"] .dropzone .dz-message { color: #243047 !important; }
+
+.dropzone:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35) !important;
 }
 
 .submit-btn {
-    background: var(--primary-color);
-    color: white;
+    background: linear-gradient(135deg, var(--neon-yellow), var(--secondary-color));
+    color: #0f1226;
     padding: 1rem 2rem;
     border: none;
-    border-radius: 50px;
-    font-weight: bold;
+    border-radius: 16px;
+    font-weight: 800;
     margin-top: 2rem;
     width: 100%;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 12px 30px rgba(0,212,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.2);
 }
 
 .submit-btn:hover {
-    transform: translateY(-3px);
-    background: var(--secondary-color);
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 20px 60px rgba(0,212,255,0.45);
 }
 
 .submit-btn:disabled {
-    background: #ccc;
+    background: #777;
     cursor: not-allowed;
 }
 
@@ -71,25 +97,32 @@
 .text-input {
     width: 100%;
     padding: 1rem;
-    border: 2px solid var(--primary-color);
-    border-radius: 10px;
-    background-color: white;
+    border: 2px solid rgba(255,255,255,0.35);
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
     font-size: 1rem;
-    color: #333;
+    color: #e9ecf1;
     resize: vertical;
-    min-height: 100px;
-    transition: all 0.3s ease;
+    min-height: 120px;
+    transition: all 0.25s ease;
     font-family: inherit;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.2), 0 10px 30px rgba(0,0,0,0.25);
+}
+:root[data-theme="light"] .text-input {
+    border-color: rgba(0,0,0,0.12);
+    background: rgba(255,255,255,0.85);
+    color: #1a2134;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 10px 30px rgba(0,0,0,0.08);
 }
 
 .text-input:hover {
-    border-color: var(--secondary-color);
+    border-color: rgba(255,255,255,0.55);
 }
 
 .text-input:focus {
     outline: none;
-    border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.1);
+    border-color: rgba(255,255,255,0.75);
+    box-shadow: 0 0 0 4px rgba(0,212,255,0.15);
 }
 
 .text-input::placeholder {
@@ -105,45 +138,55 @@
 
 .file-input {
     flex: 1;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: #fff;
+    padding: 10px;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+    color: #e9ecf1;
+}
+:root[data-theme="light"] .file-input {
+    border-color: rgba(0,0,0,0.12);
+    background: rgba(255,255,255,0.85);
+    color: #1a2134;
 }
 
 .add-file-btn {
-    background-color: #4CAF50;
-    color: white;
+    background: linear-gradient(135deg, #59f9a5, #0db8de);
+    color: #0f1226;
     border: none;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
     margin: 10px 0;
-    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 25px rgba(13,184,222,0.35);
 }
 
 .add-file-btn:hover {
-    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(13,184,222,0.45);
 }
 
 .remove-file-btn {
-    background-color: #f44336;
+    background: linear-gradient(135deg, #FF512F, #DD2476);
     color: white;
     border: none;
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     cursor: pointer;
     font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 25px rgba(221,36,118,0.35);
 }
 
 .remove-file-btn:hover {
-    background-color: #da190b;
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(221,36,118,0.45);
 }
 
 #fileInputs {

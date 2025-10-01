@@ -126,4 +126,5 @@ def delete_reel():
     return redirect(url_for('gallery'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port, debug=True)

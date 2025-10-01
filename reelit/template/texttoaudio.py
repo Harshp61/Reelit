@@ -2,7 +2,10 @@ import os
 import uuid
 from elevenlabs import VoiceSettings
 from elevenlabs.client import ElevenLabs
-from config import ELEVENLABS_API_KEY
+try:
+    from .config import ELEVENLABS_API_KEY
+except ImportError:  # pragma: no cover
+    from config import ELEVENLABS_API_KEY
 
 # Initialize ElevenLabs client once at module load
 client = ElevenLabs(

@@ -1,5 +1,8 @@
 import os
-from texttoaudio import text_to_speech_file
+try:
+    from .texttoaudio import text_to_speech_file
+except ImportError:  # pragma: no cover
+    from texttoaudio import text_to_speech_file
 import time
 import subprocess
 

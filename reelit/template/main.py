@@ -2,7 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import uuid
 from werkzeug.utils import secure_filename
 import os
-from generate import texttoaudio, create_reel
+try:
+    # When imported as a package (Render/gunicorn)
+    from .generate import texttoaudio, create_reel
+except ImportError:  # pragma: no cover
+    # When running the file directly (local dev)
+    from generate import texttoaudio, create_reel
 
 UPLOAD_FOLDER = 'user_uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}

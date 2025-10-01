@@ -44,6 +44,8 @@ def create():
         input_txt_path = os.path.join(upload_path, "input.txt")
         # Overwrite if exists to avoid stale entries
         with open(input_txt_path, "w", encoding="utf-8") as f:
+            # Add ffconcat header for robustness
+            f.write("ffconcat version 1.0\n")
             for fl in input_files:
                 img_path = os.path.join(upload_path, fl)
                 # Use absolute path and escape backslashes by using forward slashes
@@ -53,16 +55,30 @@ def create():
 
         # Trigger audio and reel generation synchronously
         try:
-            texttoaudio(rec_id)
-            create_reel(rec_id)
+            if not input_files:
+                print("No valid image files were uploaded; skipping generation.")
+            else:
+                texttoaudio(rec_id)
+                audio_path = os.path.join(app.config['UPLOAD_FOLDER'], rec_id, 'audio.mp3')
+                if not os.path.exists(audio_path):
+                    print("Audio generation failed: audio.mp3 not found at", audio_path)
+                create_reel(rec_id)
+                reels_dir = os.path.join(app.static_folder, "reels")
+                output_file = os.path.join(reels_dir, f"{rec_id}.mp4")
+                if not os.path.exists(output_file):
+                    print("Reel generation failed: output not found at", output_file)
         except Exception as e:
             print("Error generating audio/reel:", e)
     return render_template("create.html", myid=myid)
 
 @app.route("/gallery")
 def gallery():
-    reels = os.listdir("static/reels")
-    return render_template("gallery.html",reels=reels)
+    reels_dir = os.path.join(app.static_folder, "reels")
+    if not os.path.exists(reels_dir):
+        os.makedirs(reels_dir, exist_ok=True)
+    reels = [f for f in os.listdir(reels_dir) if f.lower().endswith('.mp4')]
+    reels.sort(reverse=True)
+    return render_template("gallery.html", reels=reels)
 
 if __name__ == "__main__":
     app.run(debug=True)

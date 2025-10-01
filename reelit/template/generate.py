@@ -19,7 +19,10 @@ def texttoaudio(folder: str) -> None:
         return
 
 def create_reel(folder: str) -> None:
-    reels_dir = os.path.join("static", "reels")
+    # Resolve to Flask static folder location relative to this file
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    static_dir = os.path.join(base_dir, "static")
+    reels_dir = os.path.join(static_dir, "reels")
     os.makedirs(reels_dir, exist_ok=True)
     input_txt = os.path.join("user_uploads", folder, "input.txt")
     audio_mp3 = os.path.join("user_uploads", folder, "audio.mp3")

@@ -1,7 +1,0 @@
-ffconcat version 1.0
-file 'C:/Users/pande/OneDrive/Desktop/reelit/user_uploads/8e9f7426-9f7b-11f0-b573-74d4dd1fdb08/IMG_20250815_184537.jpg'
-duration 3
-file 'C:/Users/pande/OneDrive/Desktop/reelit/user_uploads/8e9f7426-9f7b-11f0-b573-74d4dd1fdb08/IMG_20250815_184537.jpg'
-duration 3
-file 'C:/Users/pande/OneDrive/Desktop/reelit/user_uploads/8e9f7426-9f7b-11f0-b573-74d4dd1fdb08/IMG_20250815_191425.jpg'
-duration 3

@@ -1,1 +1,4 @@
-ELEVENLABS_API_KEY ="1ec0e36d91b0471f73f4f70805c7248d05936c1756982cd7223ccd6a7f8c229c"
+import os
+
+# Read from environment at runtime; leave empty string if not provided
+ELEVENLABS_API_KEY = os.environ.get("ELEVENLABS_API_KEY", "")

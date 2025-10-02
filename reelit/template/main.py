@@ -64,7 +64,7 @@ def create():
             if not input_files:
                 flash("No valid image files were uploaded.", "error")
             else:
-                texttoaudio(rec_id)
+                used_fallback = texttoaudio(rec_id)
                 audio_path = os.path.join(app.config['UPLOAD_FOLDER'], rec_id, 'audio.mp3')
                 if not os.path.exists(audio_path):
                     flash("Audio generation failed.", "error")
@@ -74,7 +74,10 @@ def create():
                 if not os.path.exists(output_file):
                     flash("Reel generation failed.", "error")
                 else:
-                    flash("Reel generated successfully!", "success")
+                    if used_fallback:
+                        flash("Reel generated with fallback music (TTS unavailable).", "warning")
+                    else:
+                        flash("Reel generated successfully!", "success")
                     return redirect(url_for('gallery'))
         except Exception as e:
             print("Error generating audio/reel:", e)

@@ -6,17 +6,18 @@ except ImportError:  # pragma: no cover
 import time
 import subprocess
 
-def texttoaudio(folder: str) -> None:
+def texttoaudio(folder: str) -> bool:
     print("Generating audio for folder:", folder)
     description_path = os.path.join("user_uploads", folder, "description.txt")
     if not os.path.exists(description_path):
         print(f"Error: description.txt not found in folder {folder}")
-        return
+        return False
     with open(description_path, "r", encoding="utf-8") as f:
         text = f.read()
     print(text, folder)
     try:
         text_to_speech_file(text, folder)
+        used_fallback = False
     except Exception as e:
         print("TTS failed, using fallback audio:", e)
         # fallback: copy a sample track if available
@@ -31,12 +32,14 @@ def texttoaudio(folder: str) -> None:
             dst = os.path.join("user_uploads", folder, "audio.mp3")
             with open(fallback, 'rb') as src, open(dst, 'wb') as out:
                 out.write(src.read())
+            used_fallback = True
         else:
             raise
     input_path = os.path.join("user_uploads", folder, "input.txt")
     if not os.path.exists(input_path):
         print(f"Error: input.txt not found in folder {folder}")
-        return
+        return used_fallback
+    return used_fallback
 
 def create_reel(folder: str) -> None:
     # Resolve to Flask static folder location relative to this file

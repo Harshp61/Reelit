@@ -7,14 +7,16 @@ try:
 except ImportError:  # pragma: no cover
     from config import ELEVENLABS_API_KEY
 
-# Initialize ElevenLabs client once at module load
-client = ElevenLabs(
-    api_key=ELEVENLABS_API_KEY,
-)
-
 
 def text_to_speech_file(text: str, folder: str) -> str:
     """Generate speech audio from text using ElevenLabs and save to audio.mp3 in the folder."""
+    if not ELEVENLABS_API_KEY:
+        raise RuntimeError("ELEVENLABS_API_KEY is not set in the environment")
+
+    client = ElevenLabs(
+        api_key=ELEVENLABS_API_KEY,
+    )
+
     response = client.text_to_speech.convert(
         voice_id="pNInz6obpgDQGcFmaJgB",
         output_format="mp3_22050_32",

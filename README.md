@@ -7,7 +7,6 @@ Turn your images and text into vertical reels with auto-generated voiceovers usi
 </div>
 
 ---
-
 ## Features
 
 - AI text-to-speech voiceover via ElevenLabs
